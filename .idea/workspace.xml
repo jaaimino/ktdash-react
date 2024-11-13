@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f537c9bc-08f9-49f5-b0fb-2f9fdb3d123f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/auth/[...nextauth]/route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/data/Auth/GetUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/lib/actions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/providers/SessionProvider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/roster/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/roster/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/KillTeam/GetEquipments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/KillTeam/GetEquipments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/login/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/login/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,28 +46,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;RosterEndpoints&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/matthewgarafalo/Documents/GitHub/Personal/ktdash-react&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/matthewgarafalo/Documents/GitHub/Personal/ktdash-react/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "NextJSAuth",
+    "last_opened_file_path": "/Users/matthewgarafalo/Documents/GitHub/Personal/ktdash-react",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/matthewgarafalo/Documents/GitHub/Personal/ktdash-react/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/api" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/app/api/roster" />
       <recent name="$PROJECT_DIR$/src/app/data/Roster" />
-      <recent name="$PROJECT_DIR$/src/app/data/Operative" />
-      <recent name="$PROJECT_DIR$/src/app/api/roster/[roster_id]" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -73,6 +87,7 @@
       <option name="presentableId" value="Default" />
       <updated>1731291848498</updated>
       <workItem from="1731291849665" duration="25592000" />
+      <workItem from="1731457005106" duration="19097000" />
     </task>
     <servers />
   </component>
