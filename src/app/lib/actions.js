@@ -9,7 +9,6 @@ export async function authenticate(formData) {
       password: formData.get("password"),
       redirect: false,
     });
-    console.log("res", result);
   } catch (error) {
     if (error && !!error.type) {
       switch (error.type) {

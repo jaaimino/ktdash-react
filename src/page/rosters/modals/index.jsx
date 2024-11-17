@@ -2,7 +2,7 @@ import { TextInput, Stack, Button, Group, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import React from 'react';
-import useAuth from '../../../hooks/use-auth';
+import useAuth_deprecated from '../../../hooks/use-auth';
 import { find, isNil } from 'lodash';
 import { useSettings } from '../../../hooks/use-settings';
 import useSWR from 'swr';
@@ -11,7 +11,7 @@ import { fetchFactions } from '@/hooks/use-api/fetchers';
 export function AddRosterModal(props) {
     const { onClose } = props;
     const [settings] = useSettings();
-    const { user } = useAuth();
+    const { user } = useAuth_deprecated();
     const form = useForm({
         mode: 'controlled',
         initialValues: {

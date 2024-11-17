@@ -19,9 +19,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function RostersRoute({
-  params
-}) {
+export default async function RostersRoute({params}) {
   const username = (await params).user;
   const userURL = `/user.php?username=${username}`;
   const user = await request(userURL);

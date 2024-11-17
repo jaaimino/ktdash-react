@@ -4,7 +4,7 @@ import { ActionIcon, Card, Container, Group, SimpleGrid, Stack, Tabs, Title } fr
 import OperativeCard from "../../components/operative-card";
 import React from "react";
 import { IconEdit, IconListCheck, IconMinus, IconPlus, IconRefresh } from "@tabler/icons-react";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import { useAppContext } from "../../hooks/app-context";
 import { debounce, groupBy, keyBy } from "lodash";
 import PloyCards from "../../components/ploy-cards";
@@ -20,7 +20,7 @@ import useSWR from "swr";
 import { fetchRoster } from "@/hooks/use-api/fetchers";
 
 export default function Dashboard() {
-    const { user: userData } = useAuth();
+    const { user: userData } = useAuth_deprecated();
     const params = useParams();
     const rosterId = params.roster;
     const [settings] = useSettings();

@@ -4,7 +4,7 @@ import { Container, Group, Image, SimpleGrid, Stack, Text, Title } from "@mantin
 import OperativeCard from "../../components/operative-card";
 import React from "react";
 import { IconArrowsSort, IconCamera, IconCards, IconCopy, IconListCheck, IconPhoto, IconPlus, IconPrinter, IconShare, IconTrash, IconUserEdit } from "@tabler/icons-react";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import { useAppContext } from "../../hooks/app-context";
 import { OperativeModal, OrderOperativesModal, ShareModal, UpdateRosterModal, UpdateRosterPotraitModal } from "./modals";
 import { modals } from "@mantine/modals";
@@ -17,7 +17,7 @@ import { fetchRoster } from "@/hooks/use-api/fetchers";
 
 export default function Roster() {
     const params = useParams();
-    const { user: userData } = useAuth();
+    const { user: userData } = useAuth_deprecated();
     const { appState, setAppState } = useAppContext();
     const { data: roster, mutate: setRoster } = useSWR(['/roster.php', params.roster], fetchRoster);
     const router = useRouter();

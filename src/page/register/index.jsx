@@ -1,13 +1,13 @@
 'use client'
 import { PasswordInput, Container, TextInput, Stack, Button, Alert } from '@mantine/core';
-import useAuth from '../../hooks/use-auth';
+import useAuth_deprecated from '../../hooks/use-auth';
 import { useForm } from '@mantine/form';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
 
 export default function Signup() {
-    const { signup } = useAuth();
+    const { signup } = useAuth_deprecated();
     const router = useRouter();
     const [errors, setErrors] = React.useState();
 

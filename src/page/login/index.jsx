@@ -8,7 +8,7 @@ import {
   Button,
   Alert,
 } from "@mantine/core";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import { useForm } from "@mantine/form";
 import React, { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 
 export default function Login() {
   const { data: session, status } = useSession();
-  const { login } = useAuth();
+  const { login } = useAuth_deprecated();
   const router = useRouter();
   // const [errorMessage, formAction, isPending] = useActionState(
   //   authenticate,

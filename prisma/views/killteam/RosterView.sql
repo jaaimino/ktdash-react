@@ -40,26 +40,26 @@ FROM
       (
         (
           (
-            `ktdash`.`Roster` `R`
-            JOIN `ktdash`.`User` `U` ON((`U`.`userid` = `R`.`userid`))
+            `killteam`.`Roster` `R`
+            JOIN `killteam`.`User` `U` ON((`U`.`userid` = `R`.`userid`))
           )
-          LEFT JOIN `ktdash`.`Faction` `F` ON((`F`.`factionid` = `R`.`factionid`))
+          LEFT JOIN `killteam`.`Faction` `F` ON((`F`.`factionid` = `R`.`factionid`))
         )
-        LEFT JOIN `ktdash`.`Killteam` `K` ON(
+        LEFT JOIN `killteam`.`Killteam` `K` ON(
           (
             (`K`.`factionid` = `R`.`factionid`)
             AND (`K`.`killteamid` = `R`.`killteamid`)
           )
         )
       )
-      LEFT JOIN `ktdash`.`RosterOperative` `RO` ON(
+      LEFT JOIN `killteam`.`RosterOperative` `RO` ON(
         (
           (`RO`.`userid` = `R`.`userid`)
           AND (`RO`.`rosterid` = `R`.`rosterid`)
         )
       )
     )
-    LEFT JOIN `ktdash`.`Operative` `O` ON(
+    LEFT JOIN `killteam`.`Operative` `O` ON(
       (
         (`O`.`factionid` = `RO`.`factionid`)
         AND (`O`.`killteamid` = `RO`.`killteamid`)

@@ -34,7 +34,6 @@ export const {
   providers: [
     Credentials({
       async authorize(credentials) {
-        console.log("cred", credentials);
         const parsedCredentials = z
           .object({ username: z.string(), password: z.string().min(8) })
           .safeParse(credentials);
@@ -51,7 +50,10 @@ export const {
           );
 
           delete user.passhash;
-          if (!!pwMatch) return user;
+          if (!!pwMatch)
+          {
+            return user;
+          }
         }
 
         return null;

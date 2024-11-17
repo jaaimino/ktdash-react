@@ -259,26 +259,26 @@ FROM
       (
         (
           (
-            `ktdash`.`Event` `E`
-            LEFT JOIN `ktdash`.`User` `U` ON((`U`.`userid` = `E`.`userid`))
+            `killteam`.`Event` `E`
+            LEFT JOIN `killteam`.`User` `U` ON((`U`.`userid` = `E`.`userid`))
           )
-          LEFT JOIN `ktdash`.`Roster` `R` ON((`R`.`rosterid` = `E`.`var1`))
+          LEFT JOIN `killteam`.`Roster` `R` ON((`R`.`rosterid` = `E`.`var1`))
         )
-        LEFT JOIN `ktdash`.`Killteam` `K` ON(
+        LEFT JOIN `killteam`.`Killteam` `K` ON(
           (
             (`K`.`factionid` = `R`.`factionid`)
             AND (`K`.`killteamid` = `R`.`killteamid`)
           )
         )
       )
-      LEFT JOIN `ktdash`.`RosterOperative` `RO` ON(
+      LEFT JOIN `killteam`.`RosterOperative` `RO` ON(
         (
           (`RO`.`rosterid` = `E`.`var1`)
           AND (`RO`.`rosteropid` = `E`.`var2`)
         )
       )
     )
-    LEFT JOIN `ktdash`.`Operative` `O` ON(
+    LEFT JOIN `killteam`.`Operative` `O` ON(
       (
         (`O`.`factionid` = `RO`.`factionid`)
         AND (`O`.`killteamid` = `RO`.`killteamid`)

@@ -4,7 +4,7 @@ import classes from './home.module.css';
 import { API_PATH } from "../../hooks/use-api";
 import { IconEye, IconFileImport, IconStar, IconStarFilled } from "@tabler/icons-react";
 import News from "./news";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import MainLogo from '../../assets/icon-96x96.png';
 import Link from "next/link";
 import NextImage from 'next/image';
@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home(props) {
     const { spotlight } = props;
-    const { user } = useAuth();
+    const { user } = useAuth_deprecated();
     const router = useRouter();
     return (
         <Stack>

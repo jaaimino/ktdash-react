@@ -36,12 +36,12 @@ FROM
     (
       (
         (
-          `ktdash`.`Roster` `R`
-          JOIN `ktdash`.`User` `U` ON((`U`.`userid` = `R`.`userid`))
+          `killteam`.`Roster` `R`
+          JOIN `killteam`.`User` `U` ON((`U`.`userid` = `R`.`userid`))
         )
-        JOIN `ktdash`.`Faction` `F` ON((`F`.`factionid` = `R`.`factionid`))
+        JOIN `killteam`.`Faction` `F` ON((`F`.`factionid` = `R`.`factionid`))
       )
-      JOIN `ktdash`.`Killteam` `K` ON(
+      JOIN `killteam`.`Killteam` `K` ON(
         (
           (`K`.`factionid` = `R`.`factionid`)
           AND (`K`.`killteamid` = `R`.`killteamid`)
@@ -50,35 +50,35 @@ FROM
     )
     LEFT JOIN (
       SELECT
-        `ktdash`.`RosterOperative`.`userid` AS `userid`,
-        `ktdash`.`RosterOperative`.`rosterid` AS `rosterid`,
-        `ktdash`.`Operative`.`opname` AS `optype`,
+        `killteam`.`RosterOperative`.`userid` AS `userid`,
+        `killteam`.`RosterOperative`.`rosterid` AS `rosterid`,
+        `killteam`.`Operative`.`opname` AS `optype`,
         count(0) AS `opcount`,
-        min(`ktdash`.`RosterOperative`.`seq`) AS `firstseq`
+        min(`killteam`.`RosterOperative`.`seq`) AS `firstseq`
       FROM
         (
-          `ktdash`.`RosterOperative`
-          JOIN `ktdash`.`Operative` ON(
+          `killteam`.`RosterOperative`
+          JOIN `killteam`.`Operative` ON(
             (
               (
-                `ktdash`.`Operative`.`factionid` = `ktdash`.`RosterOperative`.`factionid`
+                `killteam`.`Operative`.`factionid` = `killteam`.`RosterOperative`.`factionid`
               )
               AND (
-                `ktdash`.`Operative`.`killteamid` = `ktdash`.`RosterOperative`.`killteamid`
+                `killteam`.`Operative`.`killteamid` = `killteam`.`RosterOperative`.`killteamid`
               )
               AND (
-                `ktdash`.`Operative`.`fireteamid` = `ktdash`.`RosterOperative`.`fireteamid`
+                `killteam`.`Operative`.`fireteamid` = `killteam`.`RosterOperative`.`fireteamid`
               )
               AND (
-                `ktdash`.`Operative`.`opid` = `ktdash`.`RosterOperative`.`opid`
+                `killteam`.`Operative`.`opid` = `killteam`.`RosterOperative`.`opid`
               )
             )
           )
         )
       GROUP BY
-        `ktdash`.`RosterOperative`.`userid`,
-        `ktdash`.`RosterOperative`.`rosterid`,
-        `ktdash`.`Operative`.`opname`
+        `killteam`.`RosterOperative`.`userid`,
+        `killteam`.`RosterOperative`.`rosterid`,
+        `killteam`.`Operative`.`opname`
     ) `RO` ON(
       (
         (`RO`.`userid` = `R`.`userid`)

@@ -2,7 +2,7 @@ import React from "react";
 import { request } from "../use-api";
 import { useLocalStorage } from "@mantine/hooks";
 
-export default function useAuth() {
+export default function useAuth_deprecated() {
     const [user, setUser] = useLocalStorage({ key: 'auth' });
 
     const setupSession = React.useCallback(async () => {
@@ -62,6 +62,9 @@ export default function useAuth() {
     }, [setUser])
 
     const isLoggedIn = React.useCallback(() => {
+        const [user, setUser] = useLocalStorage({ key: 'auth' });
+        console.log("isLoggedIn()");
+        console.log("  User: ", user);
         return !!user?.userid;
     }, [user]);
 

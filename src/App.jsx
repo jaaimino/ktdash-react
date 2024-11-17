@@ -13,7 +13,7 @@ import { Link } from "wouter";
 import React, { useRef } from "react";
 import AppContextProvider from "./hooks/app-context";
 import AppBarMenu from "./components/app-bar-menu";
-import useAuth from "./hooks/use-auth";
+import useAuth_deprecated from "./hooks/use-auth";
 import "./assets/Oswald-VariableFont_wght.ttf";
 
 const theme = createTheme({
@@ -31,7 +31,7 @@ const theme = createTheme({
 function App() {
   const [opened, { toggle }] = useDisclosure();
   const button = useRef(null);
-  const auth = useAuth();
+  const auth = useAuth_deprecated();
 
   // Establish user session if possible
   React.useEffect(() => {

@@ -3,7 +3,7 @@ import { API_PATH } from "../../hooks/use-api";
 import { ActionIcon, Card, Container, Group, Image, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import React from "react";
 import { IconCamera, IconUserDown } from "@tabler/icons-react";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import { useAppContext } from "../../hooks/app-context";
 import { modals } from "@mantine/modals";
 import useWindowDimensions from "../../hooks/get-window-dimensions";
@@ -58,7 +58,7 @@ function OperativeGalleryCard(props) {
 }
 
 export default function Gallery() {
-    const { user: userData } = useAuth();
+    const { user: userData } = useAuth_deprecated();
     const params = useParams();
     const rosterId = params.roster;
     const { appState, setAppState } = useAppContext();
