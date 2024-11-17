@@ -7,7 +7,7 @@ import { useAppContext } from "../../hooks/app-context";
 import { IconPlus, IconUsers } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { AddRosterModal } from "./modals";
-import useAuth from "../../hooks/use-auth";
+import useAuth_deprecated from "../../hooks/use-auth";
 import { notifications } from "@mantine/notifications";
 import { useSettings } from "../../hooks/use-settings";
 import { useParams, useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ import useSWR from "swr";
 export default function Rosters() {
     const router = useRouter()
     const [settings] = useSettings();
-    const { user: userData } = useAuth();
+    const { user: userData } = useAuth_deprecated();
     const params = useParams();
     const { appState, setAppState } = useAppContext();
     const username = params.user;

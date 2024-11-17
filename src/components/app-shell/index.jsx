@@ -3,14 +3,14 @@ import { AppShell, AppShellHeader, AppShellMain, AppShellNavbar } from "@mantine
 import { NavbarSimple } from "../navbar";
 import AppBarMenu from "../app-bar-menu";
 import { useDisclosure } from "@mantine/hooks";
-import useAuth from "@/hooks/use-auth";
+import useAuth_deprecated from "@/hooks/use-auth";
 import { useEffect } from "react";
 
 export default function App(props) {
     const { children } = props;
 
     const [opened, { toggle }] = useDisclosure();
-    const auth = useAuth();
+    const auth = useAuth_deprecated();
 
     // Establish user session if possible
     useEffect(() => {

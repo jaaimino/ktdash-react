@@ -5,7 +5,7 @@ import { GetWeaponProfile } from "@/app/data/Weapon/GetWeaponProfile";
 export async function GetEquipments(factionId, ktId) {
   const prisma = await GetPrismaClient();
 
-  return await prisma.equipment.findMany({
+  return prisma.equipment.findMany({
     where: {
       OR: [
         {

@@ -53,26 +53,26 @@ FROM
         (
           (
             (
-              `ktdash`.`RosterOperative` `RO`
-              JOIN `ktdash`.`User` `U` ON((`U`.`userid` = `RO`.`userid`))
+              `killteam`.`RosterOperative` `RO`
+              JOIN `killteam`.`User` `U` ON((`U`.`userid` = `RO`.`userid`))
             )
-            JOIN `ktdash`.`Roster` `R` ON(
+            JOIN `killteam`.`Roster` `R` ON(
               (
                 (`R`.`userid` = `RO`.`userid`)
                 AND (`R`.`rosterid` = `RO`.`rosterid`)
               )
             )
           )
-          LEFT JOIN `ktdash`.`Faction` `F` ON((`F`.`factionid` = `RO`.`factionid`))
+          LEFT JOIN `killteam`.`Faction` `F` ON((`F`.`factionid` = `RO`.`factionid`))
         )
-        LEFT JOIN `ktdash`.`Killteam` `K` ON(
+        LEFT JOIN `killteam`.`Killteam` `K` ON(
           (
             (`K`.`factionid` = `RO`.`factionid`)
             AND (`K`.`killteamid` = `RO`.`killteamid`)
           )
         )
       )
-      LEFT JOIN `ktdash`.`Fireteam` `FT` ON(
+      LEFT JOIN `killteam`.`Fireteam` `FT` ON(
         (
           (`FT`.`factionid` = `RO`.`factionid`)
           AND (`FT`.`killteamid` = `RO`.`killteamid`)
@@ -80,7 +80,7 @@ FROM
         )
       )
     )
-    LEFT JOIN `ktdash`.`Operative` `O` ON(
+    LEFT JOIN `killteam`.`Operative` `O` ON(
       (
         (`O`.`factionid` = `RO`.`factionid`)
         AND (`O`.`killteamid` = `RO`.`killteamid`)

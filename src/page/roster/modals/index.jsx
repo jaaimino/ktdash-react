@@ -5,7 +5,7 @@ import React from 'react';
 import { groupBy, keyBy } from 'lodash';
 import { convertShapes } from '../../../utils/shapes';
 import { IconArrowBigRight, IconCrosshair, IconDice, IconDroplet, IconHelp, IconPhoto, IconRefresh, IconShield, IconSwords, IconTriangleInverted, IconUser } from '@tabler/icons-react';
-import useAuth from '../../../hooks/use-auth';
+import useAuth_deprecated from '../../../hooks/use-auth';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useSettings } from '../../../hooks/use-settings';
@@ -201,7 +201,7 @@ export function UpdateRosterPotraitModal(props) {
 
 export function UpdateRosterModal(props) {
     const { onClose, roster } = props;
-    const { user } = useAuth();
+    const { user } = useAuth_deprecated();
     const form = useForm({
         mode: 'controlled',
         initialValues: {

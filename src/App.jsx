@@ -1,37 +1,37 @@
-import { createTheme, Image, MantineProvider, Title } from '@mantine/core';
-import { AppShell, Burger, Group } from '@mantine/core';
-import { ModalsProvider } from '@mantine/modals';
-import { useDisclosure } from '@mantine/hooks';
-import { Notifications } from '@mantine/notifications';
-import { NavbarSimple } from './components/navbar';
-import Root from './page';
-import MainLogo from './assets/icon-96x96.png';
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
-import './App.css';
-import { Link } from 'wouter';
-import React, { useRef } from 'react';
-import AppContextProvider from './hooks/app-context';
-import AppBarMenu from './components/app-bar-menu';
-import useAuth from './hooks/use-auth';
+import { createTheme, Image, MantineProvider, Title } from "@mantine/core";
+import { AppShell, Burger, Group } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+import { useDisclosure } from "@mantine/hooks";
+import { Notifications } from "@mantine/notifications";
+import { NavbarSimple } from "./components/navbar";
+import Root from "./page";
+import MainLogo from "./assets/icon-96x96.png";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import "./App.css";
+import { Link } from "wouter";
+import React, { useRef } from "react";
+import AppContextProvider from "./hooks/app-context";
+import AppBarMenu from "./components/app-bar-menu";
+import useAuth_deprecated from "./hooks/use-auth";
 import "./assets/Oswald-VariableFont_wght.ttf";
 
 const theme = createTheme({
   fontFamily: 'Oswald, "Arial Narrow", Roboto, sans-serif',
-  primaryColor: 'orange',
+  primaryColor: "orange",
   breakpoints: {
-    xs: '36em',  // Mantine Default: 36em
-    sm: '48em',  // Mantine Default: 48em
-    md: '62em',  // Mantine Default: 62em
-    lg: '90em',  // Mantine Default: 75em
-    xl: '114em', // Mantine Default: 88em
-  }
+    xs: "36em", // Mantine Default: 36em
+    sm: "48em", // Mantine Default: 48em
+    md: "62em", // Mantine Default: 62em
+    lg: "90em", // Mantine Default: 75em
+    xl: "114em", // Mantine Default: 88em
+  },
 });
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
   const button = useRef(null);
-  const auth = useAuth();
+  const auth = useAuth_deprecated();
 
   // Establish user session if possible
   React.useEffect(() => {
@@ -44,7 +44,7 @@ function App() {
     if (opened) {
       button?.current?.click();
     }
-  }
+  };
 
   return (
     <MantineProvider defaultColorScheme="dark" theme={theme}>
@@ -53,19 +53,52 @@ function App() {
         <ModalsProvider>
           <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'md', collapsed: { mobile: !opened } }}
+            navbar={{
+              width: 300,
+              breakpoint: "md",
+              collapsed: { mobile: !opened },
+            }}
             padding={0}
           >
             <AppShell.Header>
-              <Group h="100%" px="md" gap={5} align="center" justify="space-between" style={{ flex: 1 }} wrap="nowrap">
+              <Group
+                h="100%"
+                px="md"
+                gap={5}
+                align="center"
+                justify="space-between"
+                style={{ flex: 1 }}
+                wrap="nowrap"
+              >
                 <Group justify="center" gap={5}>
-                  <Burger opened={opened} onClick={toggle} ref={button} hiddenFrom="md" size="sm" />
-                  <Link onClick={() => closeNav()} style={{ display: 'flex', textDecoration: 'none', color: 'white', alignItems: 'center' }} href="/">
+                  <Burger
+                    opened={opened}
+                    onClick={toggle}
+                    ref={button}
+                    hiddenFrom="md"
+                    size="sm"
+                  />
+                  <Link
+                    onClick={() => closeNav()}
+                    style={{
+                      display: "flex",
+                      textDecoration: "none",
+                      color: "white",
+                      alignItems: "center",
+                    }}
+                    href="/"
+                  >
                     <Group gap={5}>
-                      <Image alt="App Logo" h={40}
+                      <Image
+                        alt="App Logo"
+                        h={40}
                         w="auto"
-                        fit="contain" src={MainLogo} />
-                      <Title fontFamily="Anton" order={2}>KTDASH</Title>
+                        fit="contain"
+                        src={MainLogo}
+                      />
+                      <Title fontFamily="Anton" order={2}>
+                        KTDASH
+                      </Title>
                     </Group>
                   </Link>
                 </Group>

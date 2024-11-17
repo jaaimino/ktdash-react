@@ -12,17 +12,22 @@ import {
     IconUsers,
 } from '@tabler/icons-react';
 import classes from './navbar.module.css';
-import useAuth from '../../hooks/use-auth';
 import PWAInstallerPrompt from '../install-prompt';
 import { NavLink, Stack } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { Fragment } from 'react';
+import { signOut, useSession } from 'next-auth/react';
 
 export function NavbarSimple(props) {
-    const location = usePathname()
-    const { user, logout, isLoggedIn } = useAuth();
-    const loggedIn = isLoggedIn();
+    const location = usePathname();
+
+    // Get current user's session (if any)
+    const { data: session, status } = useSession();
+    const user = session?.user;
+    // Check if logged in
+    const isLoggedIn = (status === "authenticated");
+
     const data = [
         { link: `/u/${user?.username}`, label: 'Rosters', icon: IconUsers, loggedIn: true },
         { link: '/allfactions', label: 'Factions', icon: IconBook },
@@ -61,7 +66,7 @@ export function NavbarSimple(props) {
             </Fragment>
         )
     }
-    const links = data.filter((link) => !link.loggedIn || loggedIn).map(renderLink);
+    const links = data.filter((link) => !link.loggedIn || isLoggedIn).map(renderLink);
     return (
         <Stack display="flex" flex={1}>
             <Stack gap={0}>
@@ -89,7 +94,7 @@ export function NavbarSimple(props) {
                 />
             </Stack>
             <Stack gap={0} className={classes.navsection}>
-                {!loggedIn ? <>
+                {!isLoggedIn ? <>
                     <NavLink
                         component={Link}
                         href="/login"
@@ -112,7 +117,7 @@ export function NavbarSimple(props) {
                     />
                 </> : <NavLink
                     onClick={() => {
-                        logout();
+                        signOut();
                         props?.close();
                     }}
                     label="Log Out"

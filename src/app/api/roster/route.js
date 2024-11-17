@@ -4,6 +4,9 @@ import { GetRosterTacOps } from "@/app/data/Roster/GetRosterTacOps.js";
 import { GetRosterOperatives } from "@/app/data/RosterOperative/GetRosterOperatives.js";
 import { GetEquipments } from "@/app/data/KillTeam/GetEquipments.js";
 import { GetKillTeam } from "@/app/data/KillTeam/GetKillTeam.js";
+import { GetRosterEquipment } from "@/app/data/Roster/GetRosterEquipment";
+import { GetOperatives } from "@/app/data/Operative/GetOperatives";
+import { LoadKillTeam } from "@/app/data/KillTeam/LoadKillTeam";
 
 /**
  * Returns a Roster object from the database based on input rosterId.
@@ -15,8 +18,8 @@ import { GetKillTeam } from "@/app/data/KillTeam/GetKillTeam.js";
  */
 export async function GET(req) {
   /*
-  Sample API request: /api/roster?rosterId=jghim&loadRosterDetail=1
-  */
+        Sample API request: /api/roster?rosterId=jghim&loadRosterDetail=1
+        */
   let [loadRosterDetail, randomSpotlight, rosterId] = [
     req.nextUrl.searchParams.get("loadRosterDetail") ?? "0",
     req.nextUrl.searchParams.get("randomSpotlight") ?? "0",
@@ -34,7 +37,10 @@ export async function GET(req) {
   // No roster id passed in, need to get current user's rosters
   if (!rosterId) {
     // TODO: Add auth check here
-    const userRoster = await GetRosterByUserId(loadRoasterDetail, "currentuser.userid");
+    const userRoster = await GetRosterByUserId(
+      loadRoasterDetail,
+      "currentuser.userid",
+    );
     const userRosterData = Promise.all(
       userRoster.map(
         async (ur) =>
@@ -49,20 +55,25 @@ export async function GET(req) {
 
     return Response.json({ userRosterData });
   } else {
-    const roster = (await GetRoster(rosterId));
+    const roster = await GetRoster(rosterId);
 
     if (!roster) {
       return Response.json({ error: "Roster Not Found" }, { status: 404 });
     }
 
     if (loadRosterDetail > 0) {
-      Promise.all([
-        roster.operatives = await GetRosterOperatives(roster.rosterid),
-        roster.tacops = await GetRosterTacOps(roster.rosterid),
-        roster.equipments = await GetEquipments(roster.factionid, roster.killteamid),
-        roster.killTeam = (await GetKillTeam(roster.factionid,roster.killteamid))
+      await Promise.all([
+        (roster.operatives = await GetRosterOperatives(roster.rosterid)),
+        (roster.tacops = await GetRosterTacOps(roster.rosterid)),
+        (roster.equipments = await GetEquipments(
+          roster.factionid,
+          roster.killteamid,
+        )),
+        (roster.killTeam = await GetKillTeam(
+          roster.factionid,
+          roster.killteamid,
+        )),
       ]);
-
     }
 
     const skipViewCount = req.nextUrl.searchParams.get("skipviewcount") ?? 1;
