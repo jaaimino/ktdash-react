@@ -1,6 +1,3 @@
-import { isNil } from "lodash";
-import React from "react";
-
 export const API_PATH = "https://ktdash.app/api";
 
 export const request = async (endpoint, content) => {
