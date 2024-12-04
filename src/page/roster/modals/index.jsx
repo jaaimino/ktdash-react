@@ -1,20 +1,20 @@
 import { TextInput, Stack, Button, Group, Select, Table, SimpleGrid, Text, Checkbox, Textarea, LoadingOverlay, Box, ActionIcon, FileInput, Image, Paper, Title, Popover, ScrollArea, Flex } from '@mantine/core';
-import { API_PATH, request, requestText } from '../../../hooks/use-api';
+import { API_PATH, request, requestText } from '@/hooks/use-api';
 import { modals } from '@mantine/modals';
 import React from 'react';
 import { groupBy, keyBy } from 'lodash';
-import { convertShapes } from '../../../utils/shapes';
+import { convertShapes } from '@/utils/shapes';
 import { IconArrowBigRight, IconCrosshair, IconDice, IconDroplet, IconHelp, IconPhoto, IconRefresh, IconShield, IconSwords, IconTriangleInverted, IconUser } from '@tabler/icons-react';
-import useAuth_deprecated from '../../../hooks/use-auth';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { useSettings } from '../../../hooks/use-settings';
+import { useSettings } from '@/hooks/use-settings';
 import useWindowDimensions from '../../../hooks/get-window-dimensions';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { useListState } from '@mantine/hooks';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { fetchKillteam } from '@/hooks/use-api/fetchers';
+import {useSession} from "next-auth/react";
 
 export function ShareModal(props) {
     const { roster } = props;
@@ -201,7 +201,8 @@ export function UpdateRosterPotraitModal(props) {
 
 export function UpdateRosterModal(props) {
     const { onClose, roster } = props;
-    const { user } = useAuth_deprecated();
+    const { data: session } = useSession();
+    const { user } = session;
     const form = useForm({
         mode: 'controlled',
         initialValues: {

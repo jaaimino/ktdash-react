@@ -8,7 +8,6 @@ import {
   Button,
   Alert,
 } from "@mantine/core";
-import useAuth_deprecated from "../../hooks/use-auth";
 import { useForm } from "@mantine/form";
 import React, { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,8 +15,7 @@ import { authenticate } from "@/app/lib/actions";
 import { useSession } from "next-auth/react";
 
 export default function Login() {
-  const { data: session, status } = useSession();
-  const { login } = useAuth_deprecated();
+  const { update } = useSession();
   const router = useRouter();
   // const [errorMessage, formAction, isPending] = useActionState(
   //   authenticate,
@@ -43,23 +41,10 @@ export default function Login() {
     fd.set("password", values.password.trim());
 
     await authenticate(fd).then((res) => {
+      update();
       router.push("/");
     });
-    // login(values.username.trim(), values.password)
-    //   .then((data) => {
-    //     form.reset();
-    //     if (data?.username) {
-    //       router.push("/");
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     setErrors(e.message);
-    //   });
   };
-
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   return (
     <Container py="md">

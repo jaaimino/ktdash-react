@@ -1,22 +1,23 @@
 'use client'
 import React from "react";
 import { Anchor, Container, SimpleGrid, Text, Title } from "@mantine/core";
-import { request } from "../../hooks/use-api";
+import { request } from "@/hooks/use-api";
 import RosterCard from "../../components/roster-card";
-import { useAppContext } from "../../hooks/app-context";
+import { useAppContext } from "@/hooks/app-context";
 import { IconPlus, IconUsers } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { AddRosterModal } from "./modals";
-import useAuth_deprecated from "../../hooks/use-auth";
 import { notifications } from "@mantine/notifications";
-import { useSettings } from "../../hooks/use-settings";
+import { useSettings } from "@/hooks/use-settings";
 import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
+import {useSession} from "next-auth/react";
 
 export default function Rosters() {
     const router = useRouter()
     const [settings] = useSettings();
-    const { user: userData } = useAuth_deprecated();
+    const { data: session } = useSession();
+    const { user: userData } = session;
     const params = useParams();
     const { appState, setAppState } = useAppContext();
     const username = params.user;
