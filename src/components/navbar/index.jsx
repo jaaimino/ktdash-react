@@ -26,8 +26,6 @@ export function NavbarSimple(props) {
 
   // Get current user's session (if any)
   const { data: session, status } = useSession();
-  console.log("🚀 ~ NavbarSimple ~ session:", session);
-  console.log("🚀 ~ NavbarSimple ~ status:", status);
   const user = session?.user;
 
   // Check if logged in
@@ -86,7 +84,6 @@ export function NavbarSimple(props) {
     .map(renderLink);
 
   useEffect(() => {
-    console.log(status);
     setIsLoggedIn(status === "authenticated");
   }, [status, setIsLoggedIn, session]);
 

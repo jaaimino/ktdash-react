@@ -9,7 +9,7 @@ import {
   Alert,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import React, { useActionState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authenticate } from "@/app/lib/actions";
 import { useSession } from "next-auth/react";
@@ -19,10 +19,10 @@ export default function Login() {
   const router = useRouter();
   // const [errorMessage, formAction, isPending] = useActionState(
   //   authenticate,
-  //   undefined,
+  //   undefined
   // );
 
-  const [errors, setErrors] = React.useState();
+  const [error, setError] = useState();
 
   const form = useForm({
     mode: "uncontrolled",
@@ -41,6 +41,11 @@ export default function Login() {
     fd.set("password", values.password.trim());
 
     await authenticate(fd).then((res) => {
+      if (!!res) {
+        setError(res);
+        return;
+      }
+
       update();
       router.push("/");
     });
@@ -64,16 +69,11 @@ export default function Login() {
             key={form.key("password")}
             {...form.getInputProps("password")}
           />
-          {/*{errorMessage && (*/}
-          {/*  <>*/}
-          {/*    <p className="text-sm text-red-500">{errorMessage}</p>*/}
-          {/*  </>*/}
-          {/*)}*/}
-          {/*{!!errors && (*/}
-          {/*  <Alert color="red" variant="light">*/}
-          {/*    {errors}*/}
-          {/*  </Alert>*/}
-          {/*)}*/}
+          {!!error && (
+            <Alert color="red" variant="light">
+              {error}
+            </Alert>
+          )}
           <Button type="submit">Log In</Button>
         </Stack>
       </form>
