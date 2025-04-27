@@ -2,3 +2,64 @@
   padding-top: var(--mantine-spacing-md);
   border-top: 1px solid var(--app-shell-border-color);
 }
+
+.collapseButton {
+  display: none;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Hide the expand label as we want just an icon */
+.expandLabel {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .collapseButton {
+    display: flex;
+  }
+}
+
+.collapsed .navLabel {
+  display: none;
+}
+
+/* Hide dropdown carets in collapsed state */
+.collapsed :global(.mantine-NavLink-chevron) {
+  display: none !important;
+}
+
+/* Ensure proper alignment of all elements in collapsed state */
+.collapsed :global(.mantine-NavLink-body),
+.collapsed :global(.mantine-NavLink-section) {
+  justify-content: center !important;
+}
+
+/* Ensure the expand button icon is centered in collapsed state */
+.collapsed .expandButton :global(.mantine-NavLink-body),
+.collapsed .expandButton :global(.mantine-NavLink-section),
+.collapsed .expandButton :global(.mantine-NavLink-section svg) {
+  justify-content: center !important;
+  margin: 0 auto !important;
+}
+
+/* Reduce indentation of child items in the sidebar */
+.navbarContainer :global(.mantine-NavLink-children) {
+  padding-left: var(--mantine-spacing-md);
+}
+
+/* Further reduce indentation in collapsed state */
+.collapsed :global(.mantine-NavLink-children) {
+  padding-left: var(--mantine-spacing-xs);
+}
+
+/* Ensure child items are properly aligned in collapsed state */
+.collapsed :global(.mantine-NavLink-children .mantine-NavLink-root) {
+  padding-left: var(--mantine-spacing-xs);
+  justify-content: flex-start;
+}
+
+.navbarContainer {
+  position: relative;
+  height: 100%;
+}
