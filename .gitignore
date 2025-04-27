@@ -49,4 +49,4 @@ certificates
 
 *.xml
 *.idea
-/.idea
+.idea
