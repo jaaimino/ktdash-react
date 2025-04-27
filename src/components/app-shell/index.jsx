@@ -4,13 +4,33 @@ import { NavbarSimple } from "../navbar";
 import AppBarMenu from "../app-bar-menu";
 import { useDisclosure } from "@mantine/hooks";
 import useAuth from "@/hooks/use-auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function App(props) {
     const { children } = props;
 
     const [opened, { toggle }] = useDisclosure();
+
+    // Always start with a consistent state for SSR
+    const [desktopCollapsed, { toggle: toggleDesktopCollapsed }] = useDisclosure(false);
+
+    // Load collapsed state from localStorage after initial render (client-side only)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedState = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (savedState) {
+                toggleDesktopCollapsed();
+            }
+        }
+    }, []);
     const auth = useAuth();
+
+    // Save collapsed state to localStorage when it changes
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('sidebarCollapsed', String(desktopCollapsed));
+        }
+    }, [desktopCollapsed]);
 
     // Establish user session if possible
     useEffect(() => {
@@ -21,14 +41,22 @@ export default function App(props) {
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'md', collapsed: { mobile: !opened } }}
+            navbar={{ 
+                width: desktopCollapsed ? 80 : 300, 
+                breakpoint: 'md', 
+                collapsed: { mobile: !opened, desktop: false } 
+            }}
             padding={0}
         >
             <AppShellHeader>
                 <AppBarMenu opened={opened} toggle={toggle} />
             </AppShellHeader>
             <AppShellNavbar p="md">
-                <NavbarSimple />
+                <NavbarSimple 
+                    collapsed={desktopCollapsed} 
+                    toggleCollapsed={toggleDesktopCollapsed} 
+                    close={toggle} 
+                />
             </AppShellNavbar>
             <AppShellMain>
                 {children}
