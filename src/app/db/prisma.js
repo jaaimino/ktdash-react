@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./src/generated/prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -10,13 +10,13 @@ export async function findSingleGeneric(
   table,
   identifierProperty,
   identifierValue,
-  options = {},
+  options = {}
 ) {
   return await prisma[table].find({
     where: {
-      [identifierProperty]: identifierValue,
+      [identifierProperty]: identifierValue
     },
-    ...options,
+    ...options
   });
 }
 
@@ -25,15 +25,15 @@ export async function updateManyGeneric(
   identifierProperty,
   identifierValue,
   updateProperty,
-  updateValue,
+  updateValue
 ) {
   return await prisma[table].updateMany({
     where: {
-      [identifierProperty]: identifierValue,
+      [identifierProperty]: identifierValue
     },
     data: {
-      [updateProperty]: updateValue,
-    },
+      [updateProperty]: updateValue
+    }
   });
 }
 
@@ -41,12 +41,12 @@ export async function deleteGeneric(
   table,
   identifierProperty,
   identifierValue,
-  options = {},
+  options = {}
 ) {
   await prisma[table].delete({
     where: {
-      [identifierProperty]: identifierValue,
+      [identifierProperty]: identifierValue
     },
-    ...options,
+    ...options
   });
 }

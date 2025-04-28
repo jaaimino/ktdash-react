@@ -10,24 +10,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hello-pangea/dnd": "^17.0.0",
-    "@mantine/core": "^7.13.4",
-    "@mantine/form": "^7.13.4",
-    "@mantine/hooks": "^7.13.4",
-    "@mantine/modals": "^7.13.4",
-    "@mantine/notifications": "^7.13.4",
-    "@prisma/client": "^5.22.0",
+    "@hello-pangea/dnd": "^18.0.1",
+    "@mantine/core": "^7.17.5",
+    "@mantine/form": "^7.17.5",
+    "@mantine/hooks": "^7.17.5",
+    "@mantine/modals": "^7.17.5",
+    "@mantine/notifications": "^7.17.5",
+    "@prisma/client": "^6.6.0",
     "@tabler/icons-react": "^3.21.0",
     "lodash": "^4.17.21",
-    "next": "15.0.2",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
-    "swr": "^2.2.5"
+    "next": "15.3.1",
+    "react": "19.1",
+    "react-dom": "19.1",
+    "swr": "^2.3.3"
   },
   "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "15.0.2",
-    "prettier": "3.3.3",
-    "prisma": "^5.22.0"
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "prettier": "3.5.3",
+    "prisma": "^6.6.0"
   }
 }
