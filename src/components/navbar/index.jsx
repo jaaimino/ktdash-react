@@ -41,7 +41,7 @@ export function NavbarSimple(props) {
     ];
     const isChildActive = (children) => {
         if (!children) return false;
-        return children.some(child => 
+        return children.some(child =>
             location.includes(child.link) || (child.children && isChildActive(child.children))
         );
     };
@@ -67,7 +67,7 @@ export function NavbarSimple(props) {
                     onChange={handleToggle}
                 >
                     {item.children.map((child, childIndex) => (<Fragment key={childIndex}>{renderLink(child)}</Fragment>))}
-                </NavLink> : 
+                </NavLink> :
                 <NavLink
                     component={Link}
                     description={item.description}
@@ -105,9 +105,9 @@ export function NavbarSimple(props) {
                     />
                     <PWAInstallerPrompt
                         render={({ onClick }) => (
-                            <NavLink 
-                                leftSection={<IconDownload />} 
-                                onClick={onClick} 
+                            <NavLink
+                                leftSection={<IconDownload />}
+                                onClick={onClick}
                                 label={<span className={classes.navLabel}>App Install</span>}
                             >
                             </NavLink>
@@ -143,7 +143,7 @@ export function NavbarSimple(props) {
                             close();
                         }}
                         label={<span className={classes.navLabel}>Log Out</span>}
-                        leftSection={<IconLock component={Link} />}
+                        leftSection={<IconLock />}
                     />}
                 </Stack>
                 <Stack gap={0} className={classes.navsection}>
@@ -152,8 +152,8 @@ export function NavbarSimple(props) {
                         onClick={toggleCollapsed}
                         leftSection={collapsed ? <IconLayoutSidebarLeftExpand /> : <IconLayoutSidebarLeftCollapse />}
                         label={
-                            collapsed ? 
-                            <span className={classes.expandLabel}>Expand</span> : 
+                            collapsed ?
+                            <span className={classes.expandLabel}>Expand</span> :
                             <span className={classes.navLabel}>Collapse</span>
                         }
                         aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}

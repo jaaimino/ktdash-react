@@ -1,6 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["views"]
+  output          = "../src/generated/prisma"
 }
 
 datasource db {
@@ -411,7 +412,7 @@ view RosterOperativeView {
   fireteamname      String? @db.VarChar(200)
   archetype         String? @db.VarChar(250)
   optype            String? @db.VarChar(250)
-  
+
   @@unique([rosteropid])
 }
 
