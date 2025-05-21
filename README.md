@@ -25,6 +25,8 @@ A comprehensive dashboard application built with Next.js and React for managing 
    npm install
    ```
 
+   > **Note:** If you encounter dependency conflicts during installation, see [NPM_INSTALL_FIX.md](NPM_INSTALL_FIX.md) for the solution.
+
 3. **Set up the database**
    ```bash
    npx prisma generate
@@ -44,10 +46,12 @@ If you already have the project installed and have not updated the project in a 
    ```bash
    # Remove existing dependencies
    rm -rf node_modules
-   
+
    # Install fresh dependencies
    npm install
    ```
+
+   > **Note:** If you encounter dependency conflicts during installation, see [NPM_INSTALL_FIX.md](NPM_INSTALL_FIX.md) for the solution.
 
 2. **Regenerate Prisma client**
    ```bash
@@ -58,7 +62,7 @@ If you already have the project installed and have not updated the project in a 
    ```bash
    # Build the application
    npm run build
-   
+
    # Run the development server
    npm run dev
    ```
