@@ -68,8 +68,10 @@ export default function OperativeCard(props) {
         edition = "kt24"
     } = props;
     const [opened, setOpened] = React.useState(true);
+    const [operativeReady, setOperativeReady] = React.useState(true);
     const [settings] = useSettings();
     const [imageExpire, setImageExpire] = React.useState(true);
+
     const opImageUrl = operative.rosteropid ? `${API_PATH}/operativeportrait.php?roid=${operative.rosteropid}&expire=${imageExpire}` : `${!isCustom ? 'https://ktdash.app' : ''}/img/portraits/${operative.factionid}/${operative.killteamid}/${operative.fireteamid}/${operative.opid}.jpg`;
     const getStatusColor = () => {
         if (!!woundTracker && operative.curW <= 0) {
@@ -185,6 +187,25 @@ export default function OperativeCard(props) {
                                 <Text size="sm">{(settings.opnamefirst === "y" || !operative.optype) ? operative.optype : operative.opname}</Text>
                             </Stack>
                         </Group>
+                        {!!collapsible && settings.useOperativeState === "y" && (
+                            <Button 
+                                variant="subtle" 
+                                color={operativeReady ? "teal" : "orange"}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const newReadyState = !operativeReady;
+                                    setOperativeReady(newReadyState);
+
+                                    // If changing to expended and card is open, close it
+                                    // If changing to ready and card is closed, open it
+                                    if ((!newReadyState && opened) || (newReadyState && !opened)) {
+                                        setOpened(newReadyState);
+                                    }
+                                }}
+                            >
+                                {operativeReady ? "Ready" : "Expended"}
+                            </Button>
+                        )}
                         {!!collapsible && <>{opened ? <IconChevronDown /> : <IconChevronUp />}</>}
                         {!!editable && <Menu withinPortal position="bottom-end" shadow="sm">
                             {/* Op Actions Menu */}
