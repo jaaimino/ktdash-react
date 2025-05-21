@@ -101,6 +101,23 @@ export default function Settings() {
                                 }]}
                             />
                         </Stack>
+                        <Stack>
+                            <Title order={3}>Add Operative State</Title>
+                            <Text>Adds the Ready/Expended button that you can use to toggle the state of each operative.</Text>
+                            <SegmentedControl
+                                value={settings?.useOperativeState}
+                                onChange={(value) => updateSettings('useOperativeState', value)}
+                                color="orange"
+                                data={[{
+                                    value: 'y',
+                                    label: 'Enable'
+                                },
+                                {
+                                    value: 'n',
+                                    label: 'Disable'
+                                }]}
+                            />
+                        </Stack>
                     </SimpleGrid>
                 </Stack>
                 <Stack>

@@ -14,6 +14,7 @@ export const DEFAULT_SETTINGS = {
     "useoptypeasname": "n",
     "closequarters": "n",
     "opnamefirst": "y",
+    "useOperativeState": "n",
     "edition": ""
 };
 
