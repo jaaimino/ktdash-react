@@ -294,8 +294,8 @@ export default function OperativeCard(props) {
                                      * 1. Simple number display showing current and maximum wounds
                                      * 2. Color-coded status indicators:
                                      *    - Gray when incapacitated (0 wounds)
-                                     *    - Red when critically wounded (below half health)
-                                     *    - Orange when healthy
+                                     *    - Icon uses HeartBroken when injured (below half-health)
+                                     *    - White when healthy
                                      * 3. Invisible plus/minus buttons that appear on hover/touch
                                      * 4. Mobile-friendly touch interaction with appropriate feedback
                                      * 5. Smooth transition animations for better user experience
