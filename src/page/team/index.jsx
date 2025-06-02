@@ -56,7 +56,7 @@ export default function Team() {
                 <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
                     <Image alt="Roster portrait" onClick={() => modals.open({
                         size: "xl",
-                        title: <Title order={2}>{killteam.killteamname}</Title>,
+                        title: killteam.killteamname,
                         children: <Image
                             alt="Roster portrait"
                             fit="cover"

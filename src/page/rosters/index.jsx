@@ -42,7 +42,7 @@ export default function Rosters() {
         modals.open({
             modalId: "create-roster",
             size: "lg",
-            title: <Title order={2}>Create Roster</Title>,
+            title: "Create Roster",
             children: <AddRosterModal onClose={handleCreateRoster} />
         });
     }

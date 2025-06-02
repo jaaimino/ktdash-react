@@ -90,7 +90,7 @@ export default function OperativeCard(props) {
         modals.open({
             modalId: "update-operative-portrait",
             size: "xl",
-            title: <Title order={2}>{operative.opname}</Title>,
+            title: operative.opname,
             children: <UpdateOperativePotraitModal operative={operative} onClose={(expire) => setImageExpire(expire)} />
         });
     }
@@ -99,14 +99,14 @@ export default function OperativeCard(props) {
         withCloseButton: false,
         centered: true,
         modalId: 'update-wounds',
-        title: <Title px="md" order={3}>Update Wounds</Title>,
+        title: "Update Wounds",
         children: (
             <UpdateWoundsModal operative={operative} onClose={(wounds) => onUpdateWounds(wounds)} />
         ),
     });
     const showSpecialRules = (weaponName, weapon, profile) => modals.open({
         size: "lg",
-        title: <Title order={3}>{weaponName}</Title>,
+        title: weaponName,
         children: (
             <Stack>{parseWeaponRules(operative.edition, weapon, profile).map((rule, index) => (
                 <Stack key={index} gap="sm">
@@ -248,7 +248,7 @@ export default function OperativeCard(props) {
                                 {settings.display === "card" && <Image alt="Op Portrait"
                                     onClick={() => modals.open({
                                         size: "xl",
-                                        title: <Title order={2}>{operative.opname}</Title>,
+                                        title: operative.opname,
                                         children: <Image
                                             alt="Op Portrait"
                                             fit="cover"
@@ -321,7 +321,7 @@ export default function OperativeCard(props) {
                                             onClick={() => {
                                                 modals.open({
                                                     size: "lg",
-                                                    title: <Title order={2}>{ability.title} {ability.AP ? `(${ability.AP} AP)` : ''}</Title>,
+                                                    title: `${ability.title} ${ability.AP ? `(${ability.AP} AP)` : ''}`,
                                                     children: (
                                                         <div dangerouslySetInnerHTML={{ __html: `${convertShapes(ability.description)}` }} />
                                                     ),
@@ -345,7 +345,7 @@ export default function OperativeCard(props) {
                                             onClick={() => {
                                                 modals.open({
                                                     size: "lg",
-                                                    title: <Title order={2}>{ability.title}</Title>,
+                                                    title: ability.title,
                                                     children: (
                                                         <div dangerouslySetInnerHTML={{ __html: `${convertShapes(ability.description)}` }} />
                                                     ),
@@ -370,7 +370,7 @@ export default function OperativeCard(props) {
                                         onClick={() => {
                                             modals.open({
                                                 size: "lg",
-                                                title: <Title order={2}>{equip.eqname}</Title>,
+                                                title: equip.eqname,
                                                 children: (
                                                     <div dangerouslySetInnerHTML={{ __html: `${convertShapes(equip.eqdescription)}` }} />
                                                 ),

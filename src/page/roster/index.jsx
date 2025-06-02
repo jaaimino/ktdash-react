@@ -39,7 +39,7 @@ export default function Roster() {
             fullScreen: isSmallScreen,
             modalId: "order-operatives",
             size: "xl",
-            title: <Title order={2}>Re-Order Operatives</Title>,
+            title: "Re-Order Operatives",
             children: <OrderOperativesModal roster={roster} onClose={handleReOrderOperatives} />
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,7 +84,7 @@ export default function Roster() {
         modals.open({
             modalId: "update-portrait",
             size: "xl",
-            title: <Title order={2}>Edit Portrait</Title>,
+            title: "Edit Portrait",
             children: <UpdateRosterPotraitModal roster={roster} onClose={(expire) => setImageExpire(expire)} />
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -157,7 +157,7 @@ export default function Roster() {
             fullScreen: isSmallScreen,
             modalId: "edit-operative",
             size: "xl",
-            title: <Title order={2}>{operative.opname}</Title>,
+            title: operative.opname,
             children: <OperativeModal roster={roster} operative={operative} onClose={handleEditOperative} />
         });
     };
@@ -224,7 +224,7 @@ export default function Roster() {
                                 fullScreen: isSmallScreen,
                                 modalId: "add-operative",
                                 size: "xl",
-                                title: <Title order={2}>Add Operative</Title>,
+                                title: "Add Operative",
                                 children: <OperativeModal roster={roster} onClose={handleAddOperative} />
                             });
                         }
@@ -236,7 +236,7 @@ export default function Roster() {
                             modals.open({
                                 modalId: "update-details",
                                 size: "lg",
-                                title: <Title order={2}>Update Details</Title>,
+                                title: "Update Details",
                                 children: <UpdateRosterModal roster={roster} onClose={handleUpdateRoster} />
                             });
                         }
@@ -276,7 +276,7 @@ export default function Roster() {
                             modals.open({
                                 modalId: "share-roster",
                                 size: "xl",
-                                title: <Title order={2}>Share Roster</Title>,
+                                title: "Share Roster",
                                 children: <ShareModal roster={roster} />
                             });
                         }
@@ -327,7 +327,7 @@ export default function Roster() {
                 <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
                     <Image alt="Roster portrait" onClick={() => modals.open({
                         size: "xl",
-                        title: <Title order={2}>{roster.rostername}</Title>,
+                        title: roster.rostername,
                         children: <Image
                             alt="Roster portrait"
                             fit="cover"

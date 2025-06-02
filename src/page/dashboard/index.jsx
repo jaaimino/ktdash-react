@@ -75,7 +75,7 @@ export default function Dashboard() {
         modals.open({
             modalId: "select-operatives",
             size: "xl",
-            title: <Title order={2}>Select Operatives</Title>,
+            title: "Select Operatives",
             children: <SelectOperativesModal roster={roster} onClose={handleUpdateOperatives} />
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
