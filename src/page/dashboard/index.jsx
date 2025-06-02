@@ -197,19 +197,58 @@ export default function Dashboard() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roster]);
     const handleUpdateOperativeWounds = React.useCallback((operative, wounds) => {
+        // Store the original wounds value for recovery in case of failure
+        const originalWounds = operative.curW;
+
+        // Optimistic UI update before API call
+        setRoster({
+            ...roster,
+            operatives: roster.operatives?.map((op) => op.rosteropid === operative.rosteropid ? {
+                ...op,
+                curW: wounds
+            } : op)
+        }, { optimisticData: true, revalidate: false });
+
+        // Make the API call
         request(`/rosteropw.php?roid=${operative.rosteropid}&curW=${wounds}`, {
             method: "POST"
         }).then((data) => {
             if (data?.success) {
+                // Success case - no notification needed
+            } else {
+                // If API call fails, revert to original state
                 setRoster({
                     ...roster,
                     operatives: roster.operatives?.map((op) => op.rosteropid === operative.rosteropid ? {
                         ...op,
-                        curW: wounds
+                        curW: originalWounds
                     } : op)
                 }, { optimisticData: true, revalidate: false });
+
+                // Show error notification
+                notifications.show({
+                    title: 'Update Failed',
+                    message: `Failed to update wounds for ${operative.opname}. Please try again.`,
+                    color: 'red'
+                });
             }
-        })
+        }).catch((error) => {
+            // If API call throws an error, revert to original state
+            setRoster({
+                ...roster,
+                operatives: roster.operatives?.map((op) => op.rosteropid === operative.rosteropid ? {
+                    ...op,
+                    curW: originalWounds
+                } : op)
+            }, { optimisticData: true, revalidate: false });
+
+            // Show error notification
+            notifications.show({
+                title: 'Network Error',
+                message: `Failed to update wounds for ${operative.opname}: ${error.message}. Please check your connection.`,
+                color: 'red'
+            });
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roster]);
     const handleUpdateOperativeOrder = React.useCallback((operative, newoporder, newactivated) => {

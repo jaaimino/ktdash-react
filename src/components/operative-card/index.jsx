@@ -1,12 +1,12 @@
 'use client'
 import { ActionIcon, Card, Collapse, Group, Image, Menu, Paper, SimpleGrid, Stack, Table, Text, Title, UnstyledButton, Checkbox, Popover, Button } from "@mantine/core";
 import { convertShapes } from "../../utils/shapes";
-import { IconArrowBigRight, IconCamera, IconChevronDown, IconChevronUp, IconCrosshair, IconDice, IconDotsVertical, IconDroplet, IconEdit, IconShield, IconSwords, IconTrash, IconTriangleInverted, IconUser, IconUserBolt } from "@tabler/icons-react";
+import { IconArrowBigRight, IconCamera, IconChevronDown, IconChevronUp, IconCrosshair, IconDice, IconDotsVertical, IconDroplet, IconEdit, IconMinus, IconPlus, IconShield, IconSwords, IconTrash, IconTriangleInverted, IconUser, IconUserBolt, IconHeart, IconHeartBroken } from "@tabler/icons-react";
 import { API_PATH } from "../../hooks/use-api";
 import { modals } from "@mantine/modals";
 import parseWeaponRules from "./parser";
 import React, { Fragment, useState } from "react";
-import { UpdateOperativePotraitModal, UpdateWoundsModal } from "./modals";
+import { UpdateOperativePotraitModal } from "./modals";
 import { useSettings } from "../../hooks/use-settings";
 
 function OrderPicker(props) {
@@ -70,7 +70,15 @@ export default function OperativeCard(props) {
     const [opened, setOpened] = React.useState(true);
     const [settings] = useSettings();
     const [imageExpire, setImageExpire] = React.useState(true);
+    const [minusClicked, setMinusClicked] = React.useState(false);
+    const [plusClicked, setPlusClicked] = React.useState(false);
     const opImageUrl = operative.rosteropid ? `${API_PATH}/operativeportrait.php?roid=${operative.rosteropid}&expire=${imageExpire}` : `${!isCustom ? 'https://ktdash.app' : ''}/img/portraits/${operative.factionid}/${operative.killteamid}/${operative.fireteamid}/${operative.opid}.jpg`;
+    /**
+     * Determines the color for wound indicators based on the operative's current wound status
+     * - Gray when incapacitated (0 wounds)
+     * - Red when critically wounded (below half-health)
+     * - White otherwise (healthy)
+     */
     const getStatusColor = () => {
         if (!!woundTracker && operative.curW <= 0) {
             return "var(--mantine-color-gray-6)";
@@ -78,7 +86,29 @@ export default function OperativeCard(props) {
         if (!!woundTracker && operative.curW < operative.W / 2) {
             return "var(--mantine-color-red-6)";
         }
-        return "var(--mantine-color-orange-8)";
+        return "var(--mantine-color-white)";
+    }
+
+    /**
+     * Determines which wound icon to display based on the operative's current wound status
+     * - HeartBroken when critically wounded (below half health)
+     * - Heart when healthy
+     * - Droplet when incapacitated (0 wounds)
+     *
+     * This provides a visual cue for color-blind users beyond just color changes.
+     * Uses gray color when incapacitated (0 wounds) to de-emphasize the operative,
+     * and orange color otherwise for consistency.
+     * 
+     * @returns {JSX.Element} The appropriate icon component
+     */
+    const getWoundIcon = () => {
+        if (!!woundTracker && operative.curW <= 0) {
+            return <IconDroplet color="var(--mantine-color-gray-6)" size={20} style={{ transition: 'color 0.3s ease' }} />;
+        }
+        if (!!woundTracker && operative.curW < operative.W / 2) {
+            return <IconHeartBroken color="var(--mantine-color-orange-8)" size={20} style={{ transition: 'color 0.3s ease' }} />;
+        }
+        return <IconHeart color="var(--mantine-color-orange-8)" size={20} style={{ transition: 'color 0.3s ease' }} />;
     }
     const operativeStatGrid = edition === "kt21" ? (settings.display === "list" ? 6 : 3) : (settings.display === "list" ? 4 : 2);
     if (!operative) {
@@ -92,16 +122,6 @@ export default function OperativeCard(props) {
             children: <UpdateOperativePotraitModal operative={operative} onClose={(expire) => setImageExpire(expire)} />
         });
     }
-    const showUpdateWounds = () => modals.open({
-        size: "auto",
-        withCloseButton: false,
-        centered: true,
-        modalId: 'update-wounds',
-        title: <Title px="md" order={3}>Update Wounds</Title>,
-        children: (
-            <UpdateWoundsModal operative={operative} onClose={(wounds) => onUpdateWounds(wounds)} />
-        ),
-    });
     const showSpecialRules = (weaponName, weapon, profile) => modals.open({
         size: "lg",
         title: <Title order={3}>{weaponName}</Title>,
@@ -114,6 +134,7 @@ export default function OperativeCard(props) {
             ))}</Stack>
         ),
     });
+
     const handleUpdateOrder = (order) => {
         onUpdateOrder(order.order, order.activated);
     }
@@ -243,25 +264,221 @@ export default function OperativeCard(props) {
                                 />}
                                 {/* Op Stats */}
                                 <SimpleGrid cols={{ base: operativeStatGrid }} spacing={5}>
-                                    <Paper><Stack h="100%" justify="center" align="center" gap={5}><Text fw={700}>APL</Text><Group gap={2}><IconTriangleInverted color=" var(--mantine-color-orange-8)" size={20} /><Text fw={700}>{operative.APL}</Text></Group></Stack></Paper>
-                                    <Paper><Stack h="100%" justify="center" align="center" gap={5}><Text fw={700}>{edition !== "kt21" ? "MOVE" : "MV"}</Text> <Group gap={0}>{edition !== "kt21" && <IconArrowBigRight color=" var(--mantine-color-orange-8)" size={20} />}<Text fw={700}><span dangerouslySetInnerHTML={{ __html: `${convertShapes(operative.M)}` }} /></Text></Group></Stack></Paper>
+                                    <Paper>
+                                      <Stack h="100%" justify="center" align="center" gap={5}>
+                                        <Text fw={700}>APL</Text>
+                                        <Group gap={2}>
+                                          <IconTriangleInverted color="var(--mantine-color-orange-8)" size={20} />
+                                          <Text fw={700}>{operative.APL}</Text>
+                                        </Group>
+                                      </Stack>
+                                    </Paper>
+                                    <Paper>
+                                      <Stack h="100%" justify="center" align="center" gap={5}>
+                                        <Text fw={700}>{edition !== "kt21" ? "MOVE" : "MV"}</Text>
+                                        <Group gap={0}>
+                                          {edition !== "kt21" && <IconArrowBigRight color=" var(--mantine-color-orange-8)" size={20} />}
+                                          <Text fw={700}><span dangerouslySetInnerHTML={{ __html: `${convertShapes(operative.M)}` }} />
+                                          </Text>
+                                        </Group>
+                                      </Stack>
+                                    </Paper>
                                     {edition === "kt21" && <Paper><Stack h="100%" justify="center" align="center" gap={5}><Text fw={700}>GA</Text> <Group gap={2}><IconUser color=" var(--mantine-color-orange-8)" size={20} /><Text fw={700}>{operative.GA}</Text></Group></Stack></Paper>}
                                     {edition === "kt21" && <Paper><Stack h="100%" justify="center" align="center" gap={5}><Text fw={700}>DF</Text> <Group gap={2}><IconDice color=" var(--mantine-color-orange-8)" size={20} /><Text fw={700}>{operative.DF}</Text></Group></Stack></Paper>}
                                     <Paper><Stack h="100%" justify="center" align="center" gap={5}><Text fw={700}>{edition !== "kt21" ? "SAVE" : "SV"}</Text> <Group gap={2}><IconShield color=" var(--mantine-color-orange-8)" size={20} /><Text fw={700}>{operative.SV}</Text></Group></Stack></Paper>
+                                    {/*
+                                     * Wound Tracking System for Kill Team Operatives
+                                     * 
+                                     * This component displays and manages the wound status of an operative.
+                                     * Features:
+                                     * 1. Simple number display showing current and maximum wounds
+                                     * 2. Color-coded status indicators:
+                                     *    - Gray when incapacitated (0 wounds)
+                                     *    - Red when critically wounded (below half health)
+                                     *    - Orange when healthy
+                                     * 3. Invisible plus/minus buttons that appear on hover/touch
+                                     * 4. Mobile-friendly touch interaction with appropriate feedback
+                                     * 5. Smooth transition animations for better user experience
+                                     * 6. Server-side persistence with optimistic UI updates
+                                     */}
                                     {woundTracker ?
-                                        (<Paper style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <UnstyledButton color="white" variant="subtle" style={{ padding: 0 }} onClick={showUpdateWounds}>
-                                                <Stack justify="center" align="center" gap={5}>
-                                                    <Text fw={700}>{edition !== "kt21" ? "WOUND" : "WND"}</Text>
-                                                    <Group gap={2}>{edition !== "kt21" && <IconDroplet color={getStatusColor()} size={20} />}<Text fw={700}>{`${operative.curW}/${operative.W}`}</Text></Group>
-                                                </Stack>
-                                            </UnstyledButton>
+                                        (<Paper
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                position: 'relative',
+                                                overflow: 'hidden'
+                                            }}
+                                            className="wound-tracker"
+                                        >
+                                            <style jsx global>{`
+                                                /* Base styles for wound control buttons - invisible by default */
+                                                .wound-tracker .wound-controls {
+                                                    background: rgba(0,0,0,0);
+                                                    border: 1px solid rgba(255,255,255,0);
+                                                    z-index: 10;
+                                                    cursor: pointer;
+                                                    opacity: 0;
+                                                    transition: all 0.2s ease;
+                                                }
+
+                                                /* Show controls on hover (desktop) */
+                                                .wound-tracker:hover .wound-controls {
+                                                    opacity: 1;
+                                                    background: rgba(0,0,0,0.2);
+                                                    border: 1px solid rgba(255,255,255,0.1);
+                                                }
+
+                                                /* Set icon color to white for better visibility */
+                                                .wound-tracker .wound-controls svg {
+                                                    color: white;
+                                                }
+
+                                                /* Hide disabled buttons completely */
+                                                .wound-tracker .wound-controls[disabled] {
+                                                    opacity: 0 !important;
+                                                    cursor: default;
+                                                }
+
+                                                /* Enhanced hover effect for better feedback */
+                                                .wound-tracker .wound-controls:hover {
+                                                    background: rgba(0,0,0,0.3);
+                                                    border: 1px solid rgba(255,255,255,0.2);
+                                                    transform: scale(1.05);
+                                                }
+
+                                                /* Mobile-specific styles (devices without hover capability) */
+                                                @media (hover: none) {
+                                                    /* Keep buttons invisible by default on mobile */
+                                                    .wound-tracker .wound-controls {
+                                                        opacity: 0;
+                                                    }
+
+                                                    /* Show controls on press/touch */
+                                                    .wound-tracker:active .wound-controls {
+                                                        opacity: 1;
+                                                        background: rgba(0,0,0,0.3);
+                                                        border: 1px solid rgba(255,255,255,0.2);
+                                                    }
+
+                                                    /* Enhanced active state for better touch feedback */
+                                                    .wound-tracker:active .wound-controls:active {
+                                                        background: rgba(0,0,0,0.4);
+                                                        border: 1px solid rgba(255,255,255,0.3);
+                                                        transform: scale(1.05);
+                                                    }
+
+                                                    /* Keep disabled buttons hidden on mobile too */
+                                                    .wound-tracker:active .wound-controls[disabled] {
+                                                        opacity: 0 !important;
+                                                    }
+
+                                                    /* Auto-hide controls after click with animation */
+                                                    .wound-tracker .wound-controls.clicked {
+                                                        animation: fadeOutControls 1.5s forwards;
+                                                    }
+
+                                                    @keyframes fadeOutControls {
+                                                        0% { opacity: 1; }
+                                                        70% { opacity: 1; } /* Keep visible for 70% of the animation time */
+                                                        100% { opacity: 0; }
+                                                    }
+                                                }
+                                            `}</style>
+                                            {/* Central wound display - Shows current/max wounds with appropriate color coding */}
+                                            <Stack justify="center" align="center" gap={5} style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}>
+                                              <Text fw={700}>{edition !== "kt21" ? "WOUND" : "WND"}</Text>
+                                              <Group gap={2}>
+                                                {edition !== "kt21" && getWoundIcon()}
+                                                <Text
+                                                  fw={700}
+                                                  style={{
+                                                    color: operative.curW <= 0 ? "var(--mantine-color-gray-6)" : "var(--mantine-color-white)",
+                                                    transition: 'color 0.3s ease'
+                                                  }}
+                                                >
+                                                  {operative.curW}
+                                                </Text>
+                                                <Text
+                                                  fw={400}
+                                                  style={{
+                                                    color: 'var(--mantine-color-gray-6)',
+                                                    transition: 'color 0.3s ease'
+                                                  }}
+                                                >
+                                                  /{operative.W}
+                                                </Text>
+                                              </Group>
+                                            </Stack>
+
+                                            {/* Left control - Minus button (decreases wounds, full height, 50% width)
+                                                 * Appears on hover/touch, disabled when wounds are at 0 */}
+                                            <ActionIcon
+                                                className={`wound-controls ${minusClicked ? 'clicked' : ''}`}
+                                                color="white"
+                                                onClick={() => {
+                                                    if (operative.curW > 0) {
+                                                        setMinusClicked(true);
+                                                        onUpdateWounds(Math.max(operative.curW - 1, 0));
+                                                        setTimeout(() => {
+                                                            setMinusClicked(false);
+                                                        }, 100);
+                                                    }
+                                                }}
+                                                disabled={operative.curW <= 0}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    bottom: 0,
+                                                    left: 0,
+                                                    width: '50%',
+                                                    height: '100%',
+                                                    borderRadius: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}
+                                            >
+                                                <IconMinus size={18} />
+                                            </ActionIcon>
+
+                                            {/* Right control - Plus button (increases wounds, full height, 50% width)
+                                                 * Appears on hover/touch, disabled when wounds are at maximum */}
+                                            <ActionIcon
+                                                className={`wound-controls ${plusClicked ? 'clicked' : ''}`}
+                                                color="white"
+                                                onClick={() => {
+                                                    if (operative.curW < operative.W) {
+                                                        setPlusClicked(true);
+                                                        onUpdateWounds(Math.min(operative.curW + 1, operative.W));
+                                                        setTimeout(() => {
+                                                            setPlusClicked(false);
+                                                        }, 100);
+                                                    }
+                                                }}
+                                                disabled={operative.curW >= operative.W}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    bottom: 0,
+                                                    right: 0,
+                                                    width: '50%',
+                                                    height: '100%',
+                                                    borderRadius: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}
+                                            >
+                                                <IconPlus size={18} />
+                                            </ActionIcon>
                                         </Paper>)
                                         :
                                         (<Paper>
                                             <Stack h="100%" justify="center" align="center" gap={5}>
                                                 <Text fw={700}>{edition !== "kt21" ? "WOUND" : "WND"}</Text>
-                                                <Group gap={2}>{edition !== "kt21" && <IconDroplet color=" var(--mantine-color-orange-8)" size={20} />}<Text fw={700}>{operative.W}</Text></Group>
+                                                <Group>{edition !== "kt21" && <IconHeart color="var(--mantine-color-orange-8)" size={20} />}<Text fw={700}>{operative.W}</Text></Group>
                                             </Stack>
                                         </Paper>
                                         )}
