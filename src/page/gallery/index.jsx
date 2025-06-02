@@ -21,7 +21,7 @@ function OperativeGalleryCard(props) {
         modals.open({
             modalId: "update-operative-portrait",
             size: "xl",
-            title: <Title order={2}>{operative.opname}</Title>,
+            title: operative.opname,
             children: <UpdateOperativePotraitModal operative={operative} onClose={(expire) => setImageExpire(expire)} />
         });
     }
@@ -38,7 +38,7 @@ function OperativeGalleryCard(props) {
                     alt="Operative Image"
                     onClick={() => modals.open({
                         size: "xl",
-                        title: <Title order={2}>{operative.opname}</Title>,
+                        title: operative.opname,
                         children: <Image
                             alt="Operative Image"
                             fit="cover"
@@ -72,7 +72,7 @@ export default function Gallery() {
         modals.open({
             modalId: "update-portrait",
             size: "xl",
-            title: <Title order={2}>Edit Portrait</Title>,
+            title: "Edit Portrait",
             children: <UpdateRosterPotraitModal roster={roster} onClose={(expire) => setImageExpire(expire)} />
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +124,7 @@ export default function Gallery() {
                         alt="Roster Image"
                         onClick={() => modals.open({
                             size: "xl",
-                            title: <Title order={2}>{roster.rostername}</Title>,
+                            title: roster.rostername,
                             children: <Image
                                 alt="Roster Image"
                                 fit="cover"

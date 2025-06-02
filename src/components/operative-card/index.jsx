@@ -68,8 +68,10 @@ export default function OperativeCard(props) {
         edition = "kt24"
     } = props;
     const [opened, setOpened] = React.useState(true);
+    const [operativeReady, setOperativeReady] = React.useState(true);
     const [settings] = useSettings();
     const [imageExpire, setImageExpire] = React.useState(true);
+
     const opImageUrl = operative.rosteropid ? `${API_PATH}/operativeportrait.php?roid=${operative.rosteropid}&expire=${imageExpire}` : `${!isCustom ? 'https://ktdash.app' : ''}/img/portraits/${operative.factionid}/${operative.killteamid}/${operative.fireteamid}/${operative.opid}.jpg`;
     const getStatusColor = () => {
         if (!!woundTracker && operative.curW <= 0) {
@@ -88,7 +90,7 @@ export default function OperativeCard(props) {
         modals.open({
             modalId: "update-operative-portrait",
             size: "xl",
-            title: <Title order={2}>{operative.opname}</Title>,
+            title: operative.opname,
             children: <UpdateOperativePotraitModal operative={operative} onClose={(expire) => setImageExpire(expire)} />
         });
     }
@@ -97,14 +99,14 @@ export default function OperativeCard(props) {
         withCloseButton: false,
         centered: true,
         modalId: 'update-wounds',
-        title: <Title px="md" order={3}>Update Wounds</Title>,
+        title: "Update Wounds",
         children: (
             <UpdateWoundsModal operative={operative} onClose={(wounds) => onUpdateWounds(wounds)} />
         ),
     });
     const showSpecialRules = (weaponName, weapon, profile) => modals.open({
         size: "lg",
-        title: <Title order={3}>{weaponName}</Title>,
+        title: weaponName,
         children: (
             <Stack>{parseWeaponRules(operative.edition, weapon, profile).map((rule, index) => (
                 <Stack key={index} gap="sm">
@@ -185,6 +187,25 @@ export default function OperativeCard(props) {
                                 <Text size="sm">{(settings.opnamefirst === "y" || !operative.optype) ? operative.optype : operative.opname}</Text>
                             </Stack>
                         </Group>
+                        {!!collapsible && settings.useOperativeState === "y" && (
+                            <Button 
+                                variant="subtle" 
+                                color={operativeReady ? "teal" : "orange"}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const newReadyState = !operativeReady;
+                                    setOperativeReady(newReadyState);
+
+                                    // If changing to expended and card is open, close it
+                                    // If changing to ready and card is closed, open it
+                                    if ((!newReadyState && opened) || (newReadyState && !opened)) {
+                                        setOpened(newReadyState);
+                                    }
+                                }}
+                            >
+                                {operativeReady ? "Ready" : "Expended"}
+                            </Button>
+                        )}
                         {!!collapsible && <>{opened ? <IconChevronDown /> : <IconChevronUp />}</>}
                         {!!editable && <Menu withinPortal position="bottom-end" shadow="sm">
                             {/* Op Actions Menu */}
@@ -227,7 +248,7 @@ export default function OperativeCard(props) {
                                 {settings.display === "card" && <Image alt="Op Portrait"
                                     onClick={() => modals.open({
                                         size: "xl",
-                                        title: <Title order={2}>{operative.opname}</Title>,
+                                        title: operative.opname,
                                         children: <Image
                                             alt="Op Portrait"
                                             fit="cover"
@@ -300,7 +321,7 @@ export default function OperativeCard(props) {
                                             onClick={() => {
                                                 modals.open({
                                                     size: "lg",
-                                                    title: <Title order={2}>{ability.title} {ability.AP ? `(${ability.AP} AP)` : ''}</Title>,
+                                                    title: `${ability.title} ${ability.AP ? `(${ability.AP} AP)` : ''}`,
                                                     children: (
                                                         <div dangerouslySetInnerHTML={{ __html: `${convertShapes(ability.description)}` }} />
                                                     ),
@@ -324,7 +345,7 @@ export default function OperativeCard(props) {
                                             onClick={() => {
                                                 modals.open({
                                                     size: "lg",
-                                                    title: <Title order={2}>{ability.title}</Title>,
+                                                    title: ability.title,
                                                     children: (
                                                         <div dangerouslySetInnerHTML={{ __html: `${convertShapes(ability.description)}` }} />
                                                     ),
@@ -349,7 +370,7 @@ export default function OperativeCard(props) {
                                         onClick={() => {
                                             modals.open({
                                                 size: "lg",
-                                                title: <Title order={2}>{equip.eqname}</Title>,
+                                                title: equip.eqname,
                                                 children: (
                                                     <div dangerouslySetInnerHTML={{ __html: `${convertShapes(equip.eqdescription)}` }} />
                                                 ),
